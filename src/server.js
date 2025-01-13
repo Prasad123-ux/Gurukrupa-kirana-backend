@@ -2,7 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");
 const { addProductDataRoute } = require("./Routes/AddProductData");
-const { userRegisterRoute } = require("./Routes/AddUser");
+const { userRegisterRoute, registerUserRoute } = require("./Routes/AddUser");
 const { getProductDataRoute } = require("./Routes/GetProductData");
 const { getProductByIDRoute } = require("./Routes/GetProductByID");
 const { cartRoute } = require("./Routes/AddToCart");
@@ -51,7 +51,7 @@ app.use(
 
 // Routes
 app.use("/api/admin", addProductDataRoute);
-app.use("/api/user",userRegisterRoute) ;
+// app.use("/api/user",userRegisterRoute) ;
 app.use("/api/user",getProductDataRoute);
 app.use("/api/user", getProductByIDRoute);      
 app.use("/api/user",cartRoute,)    
@@ -64,7 +64,8 @@ app.use("/api/user", deleteCartItemRoute)
 app.use("/api/user", saveUserDataRoute)  
 app.use("/api/admin", getTotalOrderRoute) 
 app.use("/api/user", categoryDataRoute) 
-app.use("/api/user", getOrderDetailRoute)
+app.use("/api/user", getOrderDetailRoute) 
+app.use("/api/user", registerUserRoute)
 
 
 

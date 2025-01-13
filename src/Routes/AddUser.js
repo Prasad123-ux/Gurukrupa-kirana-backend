@@ -1,10 +1,10 @@
 const express = require("express")
 const { addUserController } = require("../Controllers/AddUser")
-const userRegisterRoute= express.Router() 
+const registerUserRoute= express.Router() 
 
 
 
-userRegisterRoute.post("/register", addUserController)
+registerUserRoute.post("/register", addUserController)
 
 
-module.exports={userRegisterRoute}
+module.exports={registerUserRoute}
