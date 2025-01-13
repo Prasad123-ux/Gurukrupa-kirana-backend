@@ -2,6 +2,21 @@ const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");
 const { addProductDataRoute } = require("./Routes/AddProductData");
+const { userRegisterRoute } = require("./Routes/AddUser");
+const { getProductDataRoute } = require("./Routes/GetProductData");
+const { getProductByIDRoute } = require("./Routes/GetProductByID");
+const { cartRoute } = require("./Routes/AddToCart");
+const { getCartDataRoute } = require("./Routes/GetCartData");
+const { getUserDataRoute } = require("./Routes/GetUserData");
+const { saveMyOrderRouter } = require("./Routes/SaveOrderRoute");
+const { getMyOrderRoute } = require("./Routes/GetMyOrder.JS");
+const { deleteCartItemRoute } = require("./Routes/delteCartItem"); 
+const { saveUserDataRoute } = require("./Routes/UpdateUser");
+const { getTotalOrderRoute } = require("./Routes/GetTotalOrder");
+const { categoryDataRoute } = require("./Routes/CategoryData");
+const { getOrderDetailRoute } = require("./Routes/GetOrderDetail");
+
+
 
 dotenv.config();
 
@@ -36,6 +51,22 @@ app.use(
 
 // Routes
 app.use("/api/admin", addProductDataRoute);
+app.use("/api/user",userRegisterRoute) ;
+app.use("/api/user",getProductDataRoute);
+app.use("/api/user", getProductByIDRoute);      
+app.use("/api/user",cartRoute,)    
+app.use("/api/user", getCartDataRoute) 
+app.use('/api/user', getUserDataRoute) 
+app.use("/api/user", saveMyOrderRouter)
+app.use("/api/user", getMyOrderRoute)
+
+app.use("/api/user", deleteCartItemRoute) 
+app.use("/api/user", saveUserDataRoute)  
+app.use("/api/admin", getTotalOrderRoute) 
+app.use("/api/user", categoryDataRoute) 
+app.use("/api/user", getOrderDetailRoute)
+
+
 
 // Server
 app.listen(port, () => {
