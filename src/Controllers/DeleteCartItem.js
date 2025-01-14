@@ -19,7 +19,7 @@ const deleteCartItemController = async (req, res) => {
     // Remove the product from the user's cart 
     
     const updatedProducts = userCart.products.filter(
-      (product) => product.id.toString() !== id
+      (product) => product._id.toString() !== id
       
     );
     const updateProducts = userCart.products.filter(

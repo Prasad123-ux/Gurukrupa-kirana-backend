@@ -2,6 +2,7 @@ const { cartData } = require("../Modules/CartData");
 const { ProductRegister } = require("../Modules/ProductData");
 
 const addToCartController = async (req, res) => {
+  console.log("adding in cart")
   const { id, quantity, category, name, price, unit, image } = req.body;
   const mobileNumber = req.mobile_number; // Retrieved from token
 
@@ -28,17 +29,18 @@ const addToCartController = async (req, res) => {
     let cart = await cartData.findOne({ mobileNumber });
 
     if (cart) {
-      const productIndex = cart.products.findIndex(
-        (item) => item.id.toString() === id
-      );
+      cart.products.push({ id, name, price, category, unit, image, quantity });
+      // const productIndex = cart.products.findIndex(
+        // (item) => item.id.toString() === id
+      // );
 
-      if (productIndex > -1) {
-        // Update quantity if product exists
-        cart.products[productIndex].quantity += parseInt(quantity, 10);
-      } else {
-        // Add new product to the cart
-        cart.products.push({ id, name, price, category, unit, image, quantity });
-      }
+      // if (productIndex > -1) {
+      //   // Update quantity if product exists
+      //   cart.products[productIndex].quantity += parseInt(quantity, 10);
+      // } else {
+      //   // Add new product to the cart
+      //   cart.products.push({ id, name, price, category, unit, image, quantity });
+      // }
     } else {
       // Create new cart
       cart = new cartData({

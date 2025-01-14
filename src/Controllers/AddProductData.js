@@ -37,6 +37,7 @@ const addProductDataController = async (req, res) => {
                 console.log('Local file removed:', req.file.path);
             }
         });
+        console.log(result.secure_url)
 
         // Prepare product data with the Cloudinary image URL
         const productData = new ProductRegister({

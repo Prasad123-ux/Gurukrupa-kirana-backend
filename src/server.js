@@ -15,6 +15,7 @@ const { saveUserDataRoute } = require("./Routes/UpdateUser");
 const { getTotalOrderRoute } = require("./Routes/GetTotalOrder");
 const { categoryDataRoute } = require("./Routes/CategoryData");
 const { getOrderDetailRoute } = require("./Routes/GetOrderDetail");
+const { generateOTPRoute } = require("./Routes/GenerateOTPController");
 
 
 
@@ -66,6 +67,7 @@ app.use("/api/admin", getTotalOrderRoute)
 app.use("/api/user", categoryDataRoute) 
 app.use("/api/user", getOrderDetailRoute) 
 app.use("/api/user", registerUserRoute)
+app.use("/api/user", generateOTPRoute)
 
 
 
