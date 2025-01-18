@@ -3,11 +3,12 @@ const {ProductRegister}= require("../Modules/ProductData")
 
 const categoryController=(req,res)=>{ 
     const {category}=req.body
+    console.log(category)
 
 ProductRegister.find({productCategory:category}).exec()
 .then((data)=>{ 
     console.log(data)
-    if(data==null){
+    if(data!==null){
         res.status(200).json({status:true, message:"Data Found", data:data})
 
     }else{
