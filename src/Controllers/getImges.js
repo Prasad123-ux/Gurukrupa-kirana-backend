@@ -1,0 +1,5 @@
+const getImagesController=(req, res)=>{
+
+
+
+}

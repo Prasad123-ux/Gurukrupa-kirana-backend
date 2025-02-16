@@ -38,7 +38,7 @@ const generateOTPController = async (req, res) => {
     await client.messages.create({
       body: `Your OTP for Gurukrupa Kirana is ${otp}`,
       from: process.env.TWILIO_PHONE_NUMBER,
-      to: mobile_number,
+      to: mobi,
     });
 
     res.status(200).json({
