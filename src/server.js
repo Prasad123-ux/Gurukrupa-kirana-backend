@@ -16,6 +16,8 @@ const { getTotalOrderRoute } = require("./Routes/GetTotalOrder");
 const { categoryDataRoute } = require("./Routes/CategoryData");
 const { getOrderDetailRoute } = require("./Routes/GetOrderDetail");
 const { generateOTPRoute } = require("./Routes/GenerateOTPController");
+const { updateRouter, updateProductRouter } = require("./Routes/UpdateProductData");
+const { deleteProductRoute } = require("./Routes/DeleteProductRouter");
 
 
 
@@ -31,6 +33,7 @@ app.use(express.urlencoded({ extended: true})); // Parse application/x-www-form-
 const allowedOrigins = [
   "http://localhost:3000", // Local development
   "https://gurukrupa-kirana-frontend.vercel.app", // Vercel deployment
+   
 ];
 
 
@@ -44,7 +47,7 @@ app.use(
         callback(new Error("Not allowed by CORS"));
       }
     },
-    methods: ["GET", "POST", "PUT", "DELETE"], // Allowed HTTP methods
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"], // Allowed HTTP methods
     allowedHeaders: ["Content-Type", "Authorization"], // Allowed headers
     credentials: true, // Allow credentials (cookies, etc.)
   })
@@ -68,6 +71,8 @@ app.use("/api/user", categoryDataRoute)
 app.use("/api/user", getOrderDetailRoute) 
 app.use("/api/user", registerUserRoute)
 app.use("/api/user", generateOTPRoute)
+app.use("/api/admin",updateProductRouter) 
+app.use("/api/admin", deleteProductRoute)
 
 
 
