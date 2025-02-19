@@ -3,36 +3,36 @@ const {mongoose }= require('../Config/db.js');
 const productSchema = new mongoose.Schema({
     productName: {
         type: String,
-        required: true,
+        // required: true,
         trim: true, // Removes extra spaces
     },
     productCategory: {
         type: String,
-        required: true,
+        // required: true,
     },
     productPrice: {
         type: Number,
-        required: true,
+        // required: true,
         min: 0, // Ensures no negative prices 
 
     },
     productStockQuantity: {
         type: Number,
-        required: true,
+        // required: true,
         min: 0, // Ensures no negative stock
     },
     productUnit: {
         type: String,
-        required: true,
+        // required: true,
     },
     productDescription: {
         type: String,
-        required: false,
+        // required: false,
         trim: true, // Removes extra spaces
     },
     productLink: {
         type: [],
-        required: false,
+        // required: false,
         validate: {
             validator: function (v) {
                 return /^https?:\/\/.+/.test(v); // Validates URLs
