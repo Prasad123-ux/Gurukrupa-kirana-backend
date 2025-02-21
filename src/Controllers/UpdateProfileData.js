@@ -20,6 +20,7 @@ const saveUserDataController = async (req, res) => {
             return res.status(400).json({ message: 'Name and mobile number are required.' });
         }
 
+
         let imageUrl = '';
 
         // Check if an image file is uploaded
@@ -29,6 +30,11 @@ const saveUserDataController = async (req, res) => {
             });
             imageUrl = uploadResult.secure_url; // Get the secure URL of the uploaded image
         }
+
+    const alreadyUser=await userRegister.findOne({mobile_number:req.mobile_number})
+    if(alreadyUser){
+        return res.status(400).json({message:"user already found with mobile number"})
+    }
 
         // Check if a user with the given mobile number already exists
         let user = await userRegister.findOne({ mobile_number });
