@@ -1,4 +1,5 @@
 const { ProductRegister } = require("../Modules/ProductData");
+const client = require("../../redisConfig") 
 
 const deleteProductController = async (req, res) => {
   try {
@@ -11,7 +12,7 @@ const deleteProductController = async (req, res) => {
     if (!DeleteOperation) {
       return res.status(400).json({ status: false, message: "Product not found or already deleted" });
     }
-
+    await client.del("productData"); 
     res.status(200).json({ status: true, message: "Product Deleted Successfully" });
 
   } catch (err) {

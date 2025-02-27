@@ -2,6 +2,7 @@ const cloudinary = require('cloudinary').v2;
 const dotenv = require("dotenv");
 const fs = require('fs');
 const { ProductRegister } = require('../Modules/ProductData');
+const client = require('../../redisConfig');
 dotenv.config();
 
 // Configure Cloudinary
@@ -52,6 +53,7 @@ const addProductDataController = async (req, res) => {
 
         // Save product data to the database
         await productData.save();
+        await client.del("productData")
 
         return res.status(200).json({ message: 'Product added successfully!', product: productData });
     } catch (error) {

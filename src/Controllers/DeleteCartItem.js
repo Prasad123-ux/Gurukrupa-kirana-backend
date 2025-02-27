@@ -1,6 +1,7 @@
 // import { cartData } from "../Modules/CartData";
 // const {cartDate}= require("../Modules/CartData")/
 
+const client = require("../../redisConfig");
 const { cartData } = require("../Modules/CartData");
 
 const deleteCartItemController = async (req, res) => {
@@ -29,7 +30,8 @@ const deleteCartItemController = async (req, res) => {
   console.log(updatedProducts)
     // Update the cart data in the database
     userCart.products = updatedProducts;
-    await userCart.save();
+    await userCart.save(); 
+    await client.del("cartData")
 
     return res.status(200).json({ message: "Item deleted successfully", products: updatedProducts });
   } catch (error) {

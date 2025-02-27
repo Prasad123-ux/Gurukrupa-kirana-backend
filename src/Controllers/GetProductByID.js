@@ -1,38 +1,99 @@
-const { ProductRegister } = require("../Modules/ProductData");
 
-const getProductByIDController = (req, res) => {
-  const { id } = req.params; // Extract the id from query parameters
- console.log(id)
+// const client = require("../../redisConfig") 
+
+// const getProductByIDController =async (req, res) => {
+//   const { id } = req.params; // Extract the id from query parameters
+//  console.log(id)
+//   if (!id) {
+//     return res.status(400).json({
+//       status: false,
+//       message: "Product ID is required as a query parameter",
+//     });
+//   }
+
+
+
+//   try{ 
+
+//     const cachedProductData= await client.get("productData")  
+//     console.log(cachedProductData)
+//     if(cachedProductData){
+//       const products= JSON.parse(cachedProductData) 
+//       const product=products.find(p=>p._id===id) 
+
+//     if(product){
+//       return res.status(200).json({message:"Data found", data:product})
+//     }
+//     }
+//   }
+//   catch(err){
+//     return res.status(404).json({message:"Internal Server Error",})
+
+//   }
+
+
+
+  
+// };
+
+// module.exports = { getProductByIDController };
+
+
+
+
+const client = require("../../redisConfig") ; // Import Redis client
+
+const getProductByIDController = async (req, res) => {
+  const { id } = req.params; // Extract product ID
+  
+
   if (!id) {
     return res.status(400).json({
       status: false,
-      message: "Product ID is required as a query parameter",
+      message: "Product ID is required",
     });
   }
 
-  ProductRegister.findById(id)
-    .exec()
-    .then((data) => {
-      if (data) {
-        res.status(200).json({
+
+  try {
+    // 🔹 Get all product data from Redis
+    const cachedProductData = await client.get("productData");
+
+    if (cachedProductData) {
+      
+      const products = JSON.parse(cachedProductData);
+
+      // 🔍 Find product by ID
+      const product = products.find((p) => p._id === id);
+
+      if (product) {
+        return res.status(200).json({
           status: true,
-          message: "Data found",
-          data: data,
+          message: "Product found in cache",
+          data: product,
         });
       } else {
-        res.status(404).json({
+        return res.status(404).json({
           status: false,
-          message: "We don't have information with the provided ID",
+          message: "Product not found in cache",
         });
       }
-    })
-    .catch((err) => {
-      res.status(500).json({
-        status: false,
-        message: "Internal Server Error",
-        error: err.message,
-      });
+    }
+
+  
+    return res.status(404).json({
+      status: false,
+      message: "Product data not found in cache",
     });
+
+  } catch (err) {
+    console.error("❌ Error:", err.message);
+    return res.status(500).json({
+      status: false,
+      message: "Internal Server Error",
+      error: err.message,
+    });
+  }
 };
 
 module.exports = { getProductByIDController };

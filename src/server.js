@@ -1,6 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv");
-const cors = require("cors");
+const cors = require("cors"); 
+const client= require("../redisConfig")
 const { addProductDataRoute } = require("./Routes/AddProductData");
 const { userRegisterRoute, registerUserRoute } = require("./Routes/AddUser");
 const { getProductDataRoute } = require("./Routes/GetProductData");
@@ -33,6 +34,7 @@ app.use(express.urlencoded({ extended: true})); // Parse application/x-www-form-
 const allowedOrigins = [
   "http://localhost:3000", // Local development
   "https://gurukrupa-kirana-frontend.vercel.app", // Vercel deployment
+  "http://localhost:3001"
    
 ];
 

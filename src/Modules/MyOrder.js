@@ -4,7 +4,7 @@ const orderSchema = new mongoose.Schema({
   userName: { type: String, required: true },
   mobileNumber: { type: String, required: true },
   address: { type: String, required: true },
-  deliveryOption: { type: String, required: true },
+  deliveryOption: { type: String },
   paymentMethod: { type: String, required: true },
   total: { type: Number, required: true },
   id: { type: mongoose.Schema.Types.ObjectId, required: true },
@@ -21,7 +21,7 @@ const orderSchema = new mongoose.Schema({
         },
       ],
       total: { type: Number, required: true },        // Order total
-      deliveryOption: { type: String, required: true },
+      deliveryOption: { type: String },
       paymentMethod: { type: String, required: true },
       placedAt: { type: Date, default: Date.now },
       progress: [

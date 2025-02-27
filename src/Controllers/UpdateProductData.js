@@ -1,4 +1,5 @@
 const { ProductRegister } = require("../Modules/ProductData");
+const client = require("../../redisConfig") 
 
 const updateProductDataController = async (req, res) => {
   try {
@@ -33,7 +34,7 @@ const updateProductDataController = async (req, res) => {
     if (!updatedProduct) {
       return res.status(404).json({ message: "Product not found" });
     }
-
+   await client.del("productData")
     res.status(200).json({ message: "Product updated successfully", updatedProduct });
   } catch (error) {
     console.error("Error updating product:", error);
