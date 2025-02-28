@@ -1,36 +1,3 @@
-// const { ProductRegister } = require("../Modules/ProductData");
-
-// const getProductDataController = (req, res) => {
-//   ProductRegister.find()
-//     .exec()
-//     .then((data) => {
-//       if (data && data.length > 0) {
-//         // If data is found
-//         res.status(200).json({
-//           status: true,
-//           message: "Data fetched successfully",
-//           data: data, // Include the fetched data
-//         });
-//       } else {
-//         // If no data is found
-//         res.status(404).json({
-//           status: false,
-//           message: "No data found",
-//         });
-//       }
-//     })
-//     .catch((err) => {
-//       // Handle internal server errors
-//       res.status(500).json({
-//         status: false,
-//         message: "Internal server error",
-//         error: err.message, // Include error details for debugging
-//       });
-//     });
-// };
-
-// module.exports = { getProductDataController };
-
 
 
 const {ProductRegister}= require("../Modules/ProductData")
@@ -58,7 +25,7 @@ const getProductDataController = async (req, res) => {
     }
 
     // Step 3: Store Data in Redis with Expiration (1 Hour)
-    await client.setEx(cacheKey, 15552000, JSON.stringify(products));
+    await client.set(cacheKey, 15552000, JSON.stringify(products));
 
     console.log("✅ Data Cached in Redis");
 
