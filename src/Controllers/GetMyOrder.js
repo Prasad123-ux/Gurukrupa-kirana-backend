@@ -60,14 +60,14 @@ const getMyOrdersController = async (req, res) => {
     // Extract mobile number from request (adjust based on how you send data)
     const { mobile_number } = req.mobile_number;  // or use req.query / req.params if needed
     
-    console.log("📞 Mobile Number:", mobile_number);
+    console.log("📞 Mobile Number:", req.mobileNumber);
     
-    if (!mobile_number) {
+    if (!req.mobile_number) {
       return res.status(400).json({ status: false, message: "Mobile number is required." });
     }
     
     // Create a cache key specific to the user's orders
-    const cacheKey = `order:${mobile_number}`;
+    const cacheKey = `order:${req.mobile_number}`;
     
     // 🔹 Check if order data is available in Redis cache
     const cachedOrderData = await client.get(cacheKey);
@@ -82,7 +82,7 @@ const getMyOrdersController = async (req, res) => {
     
     // 🔹 If cache miss, fetch order data from MongoDB
     console.log("🟡 Cache Miss: Fetching order data from MongoDB...");
-    const order = await Order.findOne({ mobileNumber: mobile_number }).exec();
+    const order = await Order.findOne({ mobileNumber: req.mobile_number }).exec();
     
     if (order) {
       // 🔹 Save the fetched order data in Redis with a 1-hour expiration time

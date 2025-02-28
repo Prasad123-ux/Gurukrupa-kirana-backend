@@ -73,12 +73,12 @@ const getCartItemController = async (req, res) => {
         // Extract mobile number from request
         const { mobile_number } = req.mobile_number;  // Assuming the mobile number is sent in the request body
 
-        if (!mobile_number) {
+        if (!req.mobile_number) {
             return res.status(400).json({ message: "Please log in yourself" });
         }
 
         // Generate a unique Redis key for each user
-        const cacheKey = `cartData_${mobile_number}`;
+        const cacheKey = `cartData_${req.mobile_number}`;
 
         // Check if cart data exists in Redis cache
         const cachedCartData = await client.get(cacheKey);
@@ -94,7 +94,7 @@ const getCartItemController = async (req, res) => {
 
         // If data is not in cache, fetch from MongoDB
         console.log("🟡 Fetching cart data from MongoDB...");
-        const dbCartData = await cartData.find({ mobileNumber: mobile_number });
+        const dbCartData = await cartData.find({ mobileNumber: req.mobile_number });
 
         if (!dbCartData || dbCartData.length === 0) {
             return res.status(404).json({ message: "Cart not found in database" });
