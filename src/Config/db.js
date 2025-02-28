@@ -4,8 +4,8 @@ env.config()
 
 
 
-     mongoose.connect(`mongodb://0.0.0.0/gurukrupaKirana`)  
-    // mongoose.connect (`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@cluster0.v7w6b.mongodb.net/Gurukrupa_kirana?retryWrites=true&w=majority&appName=Cluster0`,{serverSelectionTimeoutMS: 100000 })
+    //  mongoose.connect(`mongodb://0.0.0.0/gurukrupaKirana`)  
+     mongoose.connect (`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@cluster0.v7w6b.mongodb.net/Gurukrupa_kirana?retryWrites=true&w=majority&appName=Cluster0`,{serverSelectionTimeoutMS: 100000 })
 .then(()=>{
     console.log("connected",)
     console.log(process.env.MONGO_PASS)
