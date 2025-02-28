@@ -34,7 +34,7 @@ app.use(express.urlencoded({ extended: true})); // Parse application/x-www-form-
 const allowedOrigins = [
   "http://localhost:3000", // Local development
   "https://gurukrupa-kirana-frontend.vercel.app", // Vercel deployment
-  "http://localhost:3001"
+
    
 ];
 
