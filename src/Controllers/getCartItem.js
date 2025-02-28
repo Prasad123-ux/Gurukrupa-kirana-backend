@@ -101,7 +101,7 @@ const getCartItemController = async (req, res) => {
         }
 
         // Store the fetched cart data in Redis cache with expiration (e.g., 24 hours)
-        await client.setEx(cacheKey,JSON.stringify(dbCartData),"EX",86400);  // 24-hour expiry
+        await client.set(cacheKey,JSON.stringify(dbCartData),"EX",86400);  // 24-hour expiry
         // await client.set(cacheKey, JSON.stringify(products), "EX", 86400); // 86400 seconds = 24 hours
 
 
