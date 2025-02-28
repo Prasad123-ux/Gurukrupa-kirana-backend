@@ -1,8 +1,5 @@
-
-
-const {ProductRegister}= require("../Modules/ProductData")
-const client = require("../../redisConfig") 
-
+const { ProductRegister } = require("../Modules/ProductData");
+const client = require("../../redisConfig");
 
 const getProductDataController = async (req, res) => {
   try {
@@ -24,18 +21,17 @@ const getProductDataController = async (req, res) => {
       return res.status(404).json({ message: "No products found" });
     }
 
-    // Step 3: Store Data in Redis with Expiration (1 Hour)
-    await client.set(cacheKey, 15552000, JSON.stringify(products));
-
+    // Step 3: Store Data in Redis with Expiration (e.g., 24 hours)
+    await client.set(cacheKey, JSON.stringify(products), "EX", 86400); // 86400 seconds = 24 hours
     console.log("✅ Data Cached in Redis");
 
     // Step 4: Return Data to Frontend
     res.status(200).json({ data: products });
 
   } catch (error) {
-    console.error(" Error fetching product data:", error);
+    console.error("❌ Error fetching product data:", error);
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
 
-module.exports = {getProductDataController }
+module.exports = { getProductDataController };
