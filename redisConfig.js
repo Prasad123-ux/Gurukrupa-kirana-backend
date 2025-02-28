@@ -1,4 +1,4 @@
-const redis = require("redis");
+// const redis = require("redis");
 
 // Create Redis client
 const client = redis.createClient({
