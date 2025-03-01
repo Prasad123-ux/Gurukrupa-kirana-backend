@@ -1,4 +1,4 @@
-const client = require("../../redisConfig");
+
 const { Order } = require("../Modules/MyOrder");
 const mongoose = require("mongoose"); // Optional: for ObjectId conversion if needed
 
@@ -110,7 +110,7 @@ console.log(req.body)
         orders: [newOrder],
       });
       await order.save(); 
-      await client.del(`myOrder${req.mobileNumber}`)
+    
       return res.status(201).json({
         message: "Order created successfully",
         order: newOrder,

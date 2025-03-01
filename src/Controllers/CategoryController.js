@@ -1,4 +1,4 @@
-const client = require("../../redisConfig");
+
 const { ProductRegister } = require("../Modules/ProductData");
 
 const categoryController = async (req, res) => {
@@ -6,38 +6,7 @@ const categoryController = async (req, res) => {
     const { category } = req.body;
     console.log("Requested category:", category);
 
-    if (!category) {
-      return res.status(400).json({ status: false, message: "Category is required" });
-    }
-
-    // 🔹 Attempt to fetch cached product data from Redis
-    const cachedProductData = await client.get("productData");
-
-    if (cachedProductData) {
-      console.log("✅ Cache Hit: Product data found in Redis");
-      // Parse cached data into an array of products
-      const productList = JSON.parse(cachedProductData);
-
-      // Filter products by category
-      const filteredProducts = productList.filter(
-        (product) => product.productCategory === category
-      );
-
-      if (filteredProducts.length > 0) {
-        return res.status(200).json({
-          status: true,
-          message: "Data found in cache",
-          data: filteredProducts,
-        });
-      } else {
-        console.log("No matching products in cache for this category.");
-      }
-    } else {
-      console.log("❌ Cache Miss: No product data found in Redis.");
-    }
-
-    // 🔹 Fallback: Fetch data from the database
-    const data = await ProductRegister.find({ productCategory: category });
+const data = await ProductRegister.find({ productCategory: category });
 
     if (data && data.length > 0) {
       // Optionally, update the cache with the full product list.

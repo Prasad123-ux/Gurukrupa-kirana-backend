@@ -64,7 +64,7 @@
 
 
 
-const client = require("../../redisConfig");
+
 const { cartData } = require("../Modules/CartData");  
 const { ProductRegister } = require("../Modules/ProductData");
 
@@ -77,33 +77,14 @@ const getCartItemController = async (req, res) => {
             return res.status(400).json({ message: "Please log in yourself" });
         }
 
-        // Generate a unique Redis key for each user
-        const cacheKey = `cartData_${req.mobile_number}`;
-
-        // Check if cart data exists in Redis cache
-        const cachedCartData = await client.get(cacheKey);
-
-        if (cachedCartData) {    
-            console.log("✅ Serving cart data from Redis Cache");
-
-            return res.status(200).json({
-                message: "Data sent from cache",
-                data: JSON.parse(cachedCartData),
-            });
-        }
-
-        // If data is not in cache, fetch from MongoDB
-        console.log("🟡 Fetching cart data from MongoDB...");
+        
         const dbCartData = await cartData.find({ mobileNumber: req.mobile_number });
 
         if (!dbCartData || dbCartData.length === 0) {
             return res.status(404).json({ message: "Cart not found in database" });
         }
 
-        // Store the fetched cart data in Redis cache with expiration (e.g., 24 hours)
-        await client.set(cacheKey,JSON.stringify(dbCartData),"EX",86400);  // 24-hour expiry
-        // await client.set(cacheKey, JSON.stringify(products), "EX", 86400); // 86400 seconds = 24 hours
-
+       
 
         console.log("✅ Cart data cached in Redis");
 

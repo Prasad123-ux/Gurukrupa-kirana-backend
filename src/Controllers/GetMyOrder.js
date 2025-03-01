@@ -1,4 +1,4 @@
-const client = require("../../redisConfig");
+
 const { Order } = require("../Modules/MyOrder");
 
 const getMyOrdersController = async (req, res) => {
@@ -11,29 +11,11 @@ const getMyOrdersController = async (req, res) => {
     }
     
     // Create a cache key for this user's order data
-    const cacheKey = `order:${mobileNumber}`;
-    
-    // 🔹 Check if order data is available in Redis cache
-    const cachedOrderData = await client.get(cacheKey);
-    if (cachedOrderData) {
-      console.log("✅ Cache Hit: Returning order data from cache.");
-      return res.status(200).json({
-        status: true,
-        message: "User Found (from cache)",
-        data: JSON.parse(cachedOrderData)
-      });
-    }
-    
+  
     // 🔹 If cache miss, fetch order data from the database
     const order = await Order.findOne({ mobileNumber }).exec();
     
     if (order) {
-      // 🔹 Save the fetched order data in Redis with an expiration time (TTL)
-      // Here, TTL is set to 3600 seconds (1 hour). Adjust as needed.
-      // await client.set(cacheKey, 3600, JSON.stringify(order)); 
-      await client.set(cacheKey, JSON.stringify(order),"EX", 86400)
-      await client.set(cacheKey, JSON.stringify(products), "EX", 86400); // 86400 seconds = 24 hours
-
       
       
       return res.status(200).json({
