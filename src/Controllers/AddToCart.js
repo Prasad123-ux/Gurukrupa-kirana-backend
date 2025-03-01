@@ -146,7 +146,7 @@ const addToCartController = async (req, res) => {
    console.log("data found")
     if (cart) {
       // Find if the product already exists in the cart
-      const productIndex = cart.products.findIndex(
+      const productIndex = cart.ProductRegister.findIndex(
         (item) => item.productID.toString() === productID.toString()
       );
 
